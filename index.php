@@ -1,17 +1,9 @@
 <?php
 require "conn.php";
 
-if(isset($_POST['mytask'])){
-  $task = $_POST['mytask'];
-
-  $insert = $conn->prepare("INSERT INTO  tasks (name) VALUES (:name)");
-
-  $insert->execute([':name' => $task]);
-}
-
+$data = $conn->query("SELECT * FROM tasks");
 
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -27,7 +19,7 @@ if(isset($_POST['mytask'])){
 <body>
     <h3 class="text-primary text-center mb-3 mt-3">Todo-app</h3>
 
-    <form method="POST" action="index.php" class="form-inline row g-3">
+    <form method="POST" action="insert.php" class="form-inline row g-3">
         <div class="col-6 mx-auto">
             <div class="col-auto">
                 <input name="mytask" type="text" class="form-control" id="" placeholder="Enter your tasks here.."
@@ -49,14 +41,18 @@ if(isset($_POST['mytask'])){
                     <th scope="col">Action</th>
                 </tr>
             </thead>
+
             <tbody>
+                <?php while($rows = $data->fetch(PDO::FETCH_OBJ)): ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
+                    <th scope="row"><?php echo $rows->id; ?></th>
+
+                    <td><?php echo $rows->name; ?></td>
                     <td>
                         <button type="button" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>
