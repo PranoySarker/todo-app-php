@@ -49,7 +49,7 @@ $data = $conn->query("SELECT * FROM tasks");
 
                     <td><?php echo $rows->name; ?></td>
                     <td>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <a class="btn btn-danger" href="delete.php?del_id=<?php echo $rows->id ?>">Delete</a>
                     </td>
                 </tr>
                 <?php endwhile; ?>
