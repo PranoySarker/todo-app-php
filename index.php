@@ -1,7 +1,13 @@
 <?php
 require "conn.php";
 
+if(isset($_POST['mytask'])){
+  $task = $_POST['mytask'];
 
+  $insert = $conn->prepare("INSERT INTO  tasks (name) VALUES (:name)");
+
+  $insert->execute([':name' => $task]);
+}
 
 
 ?>
@@ -21,13 +27,14 @@ require "conn.php";
 <body>
     <h3 class="text-primary text-center mb-3 mt-3">Todo-app</h3>
 
-    <form class="form-inline row g-3" method="POST" action="index.php">
+    <form method="POST" action="index.php" class="form-inline row g-3">
         <div class="col-6 mx-auto">
             <div class="col-auto">
-                <input type="text" class="form-control" id="" placeholder="Enter your tasks here.." required>
+                <input name="mytask" type="text" class="form-control" id="" placeholder="Enter your tasks here.."
+                    required>
             </div>
             <div class="col-auto mt-2">
-                <button type="submit" class="btn btn-primary mb-3">Create</button>
+                <button name="submit" type="submit" class="btn btn-primary mb-3">Create</button>
             </div>
         </div>
     </form>
